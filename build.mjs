@@ -24,8 +24,12 @@ const feed = (xml) => xml ? [...xml.matchAll(/<entry>([\s\S]*?)<\/entry>/g)].map
 mkdirSync('dist/shots', { recursive: true });
 const games = (await get(cfg.games_json, 'json'))?.games?.filter((g) => g.status !== 'hidden' && g.path) ?? [];
 const shows = [];
+const feeds = {};
+for (const s of cfg.shows) feeds[s.id] = feed(await get(s.feed));
+const elsewhere = new Set([...(feeds.velvet || []), ...(feeds.otto || [])].map((v) => v.id));
 for (const s of cfg.shows) {
-  let vids = feed(await get(s.feed));
+  let vids = feeds[s.id];
+  if (s.id === "arena") vids = vids.filter((v) => !elsewhere.has(v.id));
   if (s.id !== 'velvet') vids = vids.sort((a, b) => b.date.localeCompare(a.date)); // series start at episode one; the rest newest first
   shows.push({ ...s, vids: vids.slice(0, 3) });
 }
