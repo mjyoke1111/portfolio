@@ -1,0 +1,35 @@
+{
+  "name": "mjyoke1111",
+  "title": "mjyoke1111 — Portfolio",
+  "url": "https://mjyoke1111.pages.dev/",
+  "description": "AI benchmarks, browser games, experiments and shows, all built with AI models and live on the web.",
+  "links": {
+    "x": "https://x.com/MjYoke1111",
+    "github": "https://github.com/mjyoke1111",
+    "youtube": "https://www.youtube.com/channel/UCAI_zEvJRJ4K48zl9YmZTUw"
+  },
+  "work": [
+    {"id":"mr","title":"Model Reviewer","kind":"Benchmark","url":"https://model-review-3yp.pages.dev/",
+     "line":"I give the same prompt to different AI models and coding harnesses, then publish what each one actually built, side by side, so you can open the results and judge for yourself.",
+     "tech":"Static site, GitHub Actions, Cloudflare Pages"},
+    {"id":"ags","title":"AI Game Studio","kind":"Games","url":"https://ai-game-studio-amz.pages.dev/",
+     "line":"A shelf of small browser games, each one made by an AI model from a single prompt. {games} of them so far, and you can play every one.",
+     "tech":"HTML5 games, JavaScript, Cloudflare Pages"},
+    {"id":"jev","title":"JevLab","kind":"Experiments","url":"https://lab.jev-labs.pages.dev/",
+     "line":"Where the smaller ideas go: tools, toys and quick tests that run straight in the browser.",
+     "tech":"Browser experiments, Cloudflare Pages"}
+  ],
+  "shows": [
+    {"id":"velvet","title":"Velvet '97","url":"https://www.youtube.com/playlist?list=PLO17Go-R1ErI","cta":"Season 1 playlist",
+     "feed":"https://www.youtube.com/feeds/videos.xml?playlist_id=PLO17Go-R1ErI",
+     "line":"A drama series set in 1997, written and produced with AI tools. Season one is coming out one episode at a time."},
+    {"id":"arena","title":"AI Coding Arena","url":"https://www.youtube.com/channel/UCAI_zEvJRJ4K48zl9YmZTUw","cta":"Channel",
+     "feed":"https://www.youtube.com/feeds/videos.xml?channel_id=UCAI_zEvJRJ4K48zl9YmZTUw",
+     "line":"Model showdowns, coding timelapses and plain-spoken explainers."},
+    {"id":"otto","title":"Otto Brindle","url":"https://www.youtube.com/playlist?list=PLQipxDIP0XRE","cta":"All Shorts","short":true,
+     "feed":"https://www.youtube.com/feeds/videos.xml?playlist_id=PLQipxDIP0XRE",
+     "line":"Shorts starring an AI character with strong opinions about smart fridges, captchas and robot vacuums."}
+  ],
+  "games_json": "https://ai-game-studio-amz.pages.dev/games.json",
+  "games_base": "https://ai-game-studio-amz.pages.dev/"
+}

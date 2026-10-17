@@ -1,0 +1,48 @@
+name: build-and-deploy
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '17 */6 * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install
+        run: |
+          npm i --no-save playwright@1.48.2 wrangler@3
+          npx playwright install --with-deps chromium
+      - name: Screenshots
+        run: node shoot.mjs
+      - name: Build
+        run: node build.mjs
+      - name: Content check
+        env:
+          BANNED_RE: ${{ secrets.BANNED_RE }}
+        run: |
+          test -s dist/index.html
+          if [ -n "$BANNED_RE" ] && grep -rEiq "$BANNED_RE" dist; then echo "banned content in output"; exit 1; fi
+          if grep -rwqE '[T]ab' dist/index.html; then echo "banned word in output"; exit 1; fi
+      - name: Deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          npx wrangler pages project create mjyoke1111 --production-branch main || true
+          npx wrangler pages deploy dist --project-name mjyoke1111 --branch main --commit-dirty=true
+      - name: Verify
+        run: |
+          sleep 15
+          code=$(curl -s -o /dev/null -w '%{http_code}' https://mjyoke1111.pages.dev/)
+          echo "live: $code"; test "$code" = 200
