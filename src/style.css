@@ -161,10 +161,10 @@ h3 a { text-decoration: none; display: inline-block; padding: 10px 0; margin: -1
 .preview img { width: 100%; height: auto; aspect-ratio: 1.6; object-fit: cover; object-position: top; }
 .pic video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; opacity: 0; transition: opacity .6s; }
 .pic video.on { opacity: 1; }
-.body { padding: clamp(18px, 2.4vw, 28px) clamp(12px, 2vw, 22px) clamp(10px, 1.4vw, 16px); display: flex; flex-direction: column; gap: 12px; flex: 1; }
+.body { min-width: 0; padding: clamp(18px, 2.4vw, 28px) clamp(12px, 2vw, 22px) clamp(10px, 1.4vw, 16px); display: flex; flex-direction: column; gap: 12px; flex: 1; }
 .body > p { color: var(--ink-2); max-width: 38rem; text-wrap: pretty; }
 .facts { display: flex; flex-wrap: wrap; gap: 8px; }
-.facts li { padding: 5px 12px; border-radius: 999px; background: var(--tint); color: var(--ink-2); font-size: .875rem; font-weight: 500; }
+.facts li { max-width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 5px 12px; border-radius: 999px; background: var(--tint); color: var(--ink-2); font-size: .875rem; font-weight: 500; }
 .gos { display: flex; flex-wrap: wrap; column-gap: 20px; margin-top: auto; }
 .go { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; font-weight: 600; color: var(--ink); text-decoration: none; overflow-wrap: anywhere; align-self: flex-start; }
 .body > .go { margin-top: auto; }
