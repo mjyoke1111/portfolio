@@ -110,7 +110,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 
 /* ---------- hero ---------- */
 .hero { position: relative; isolation: isolate; margin-top: -68px; padding: calc(68px + clamp(44px, 7vw, 96px)) 0 clamp(40px, 5vw, 64px); }
-.hero-bg, .hero canvas { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; pointer-events: none; }
+.hero-bg, .hero canvas { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; pointer-events: none; -webkit-mask-image: linear-gradient(#000 55%, transparent); mask-image: linear-gradient(#000 55%, transparent); }
 .hero-bg {
   background:
     radial-gradient(60% 70% at 96% 6%, rgba(var(--leak-b), calc(var(--leak-o) * .55)), transparent 70%),
@@ -123,7 +123,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .hero.gl canvas { opacity: 1; }
 .hero h1 {
   font-weight: 760; font-stretch: 72%; font-size: clamp(2.75rem, 1.4rem + 6.4vw, 6rem);
-  line-height: .94; letter-spacing: -.025em; max-width: 17ch; text-wrap: balance;
+  line-height: .94; letter-spacing: -.025em; max-width: 21ch; text-wrap: pretty;
 }
 .hero h1 em { font-style: normal; color: var(--mark); }
 .hero-foot { display: grid; gap: 28px; margin-top: clamp(28px, 4vw, 44px); align-items: end; }
@@ -166,7 +166,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .nudge svg { width: 18px; height: 18px; }
 @media (hover: hover) and (min-width: 700px) { .nudge { display: flex; } }
 .rail {
-  overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-padding-left: var(--gut);
+  overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-padding-left: max(var(--gut), calc((100% - var(--max)) / 2 + var(--gut)));
   scrollbar-width: thin; scrollbar-color: var(--ink-3) transparent; padding-bottom: 10px;
 }
 .rail::-webkit-scrollbar { height: 6px; }
@@ -176,7 +176,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   background: var(--holes) 0 2px / 26px 12px repeat-x, var(--holes) 0 calc(100% - 2px) / 26px 12px repeat-x, var(--film);
   margin: 0 var(--gut);
 }
-@media (min-width: 1440px) { .track { margin-left: calc((100vw - var(--max)) / 2 + var(--gut)); } }
+.track { margin-left: max(var(--gut), calc((100% - var(--max)) / 2 + var(--gut))); }
 .shot { width: clamp(232px, 64vw, 288px); padding: 0 9px; scroll-snap-align: start; color: var(--film-ink); }
 .shot:first-child { padding-left: 14px; }
 .shot:last-child { padding-right: 14px; width: calc(clamp(232px, 64vw, 288px) + 5px); }

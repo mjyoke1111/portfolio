@@ -20,3 +20,4 @@ Handoff note. Keep it short.
 - `node --test test/` on Node 22 resolves the folder through `test/package.json` "main".
 
 ## Session log
+- 2026-10-23 16:25Z Claude Code/claude-opus-5-5: v3 contact-sheet redesign (data fetch + snapshot, prerendered page, WebGL hero, OG card, tests, CI extras). Lighthouse mobile local 99/100/100/100. Next: owner review after deploy.

@@ -72,7 +72,8 @@ function trip(items, chHref, chName) {
 }
 
 export function render(data) {
-  const css = readFileSync(new URL('./style.css', import.meta.url), 'utf8');
+  const css = readFileSync(new URL('./style.css', import.meta.url), 'utf8')
+    .replace(/\/\*[\s\S]*?\*\//g, '').replace(/\s+/g, ' ').replace(/\s*([{};,])\s*/g, '$1').trim();
   const js = readFileSync(new URL('./main.js', import.meta.url), 'utf8');
   const s = data.mr.stats, g = data.games, built = data.builtAt;
   const stats = { models: s.models, runs: s.runs, games: g.stats.games, jev: data.jev.stats.jev, videos: data.videos };
@@ -140,7 +141,7 @@ export function render(data) {
 <div class="hero-bg" aria-hidden="true"></div>
 <canvas aria-hidden="true"></canvas>
 <div class="wrap">
-<h1 id="hero-h">I test every new AI model in public, then build with the <em>survivors</em>.</h1>
+<h1 id="hero-h">I test every new AI model in public, then build with the&nbsp;<em>survivors</em>.</h1>
 <div class="hero-foot">
 <p class="lede">Same prompt to every model and coding harness, every raw output published, <b>failures included</b>. The ones that hold up make browser games, measured experiments and two YouTube channels.</p>
 <div class="ctas">
