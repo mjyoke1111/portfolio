@@ -7,6 +7,7 @@ Handoff note. Keep it short.
 - `labs-hub/`: a different site (lab.mjyoke1111.biz.id). Do not touch it from portfolio work.
 
 ## Status
+- 2026-10-23 phone pass: fact chips stay one line (nowrap+ellipsis), card bodies min-width:0 (d222779). labs-hub moved to the light theme (Onest, same tokens, 44px back link; 70fe716, deployed to Pages labs-hub by hand: it is not in this repo's workflow).
 - FIX2 owner redesign built ("daylight studio"): light-first pastel look (Onest, mint/sky/lilac/rose tints, CSS aurora),
   v2 content (862ebe6) restored as the base, raw-results/miss section gone, latest strip = finished public work only
   (ok + 200 / playable / published, junk-word filter, friendly titles). DESIGN.md is the plan of record; INSPIRATION.md
@@ -32,3 +33,4 @@ Handoff note. Keep it short.
 - 2026-10-23 16:25Z Claude Code/claude-opus-5-5: v3 contact-sheet redesign (data fetch + snapshot, prerendered page, WebGL hero, OG card, tests, CI extras). Lighthouse mobile local 99/100/100/100. Next: owner review after deploy.
 - 2026-10-23 16:40Z Claude Code/claude-opus-5-5: FIX1 (drop private-repo source links, verify latest links at build, allSettled fetch, robots.txt + sitemap.xml); 10 tests green. Next: owner call on the miss card / raw copy.
 - 2026-10-23 17:12Z Claude Code/claude-opus-5-5: FIX2 light redesign (content from 862ebe6, strict latest filter, CSS aurora, Onest, new og.png, DESIGN.md plan of record, INSPIRATION.md); Chromium + WebKit at 8 widths. Next: owner review.
+- 2026-10-23 21:15Z Claude Code/claude-opus-5-5: phone audit 360/390: portfolio clean (blank cards in full-page shots are a capture artefact), chip hardening; labs-hub light theme + 44px back link. Next: none for mobile.
