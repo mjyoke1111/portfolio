@@ -7,20 +7,22 @@ Handoff note. Keep it short.
 - `labs-hub/`: a different site (lab.mjyoke1111.biz.id). Do not touch it from portfolio work.
 
 ## Status
-- v3 "contact sheet" redesign built: build-time data with snapshot fallback, prerendered stats and latest strip,
-  WebGL hero, bento of six projects, raw-results section, OG card. `node build.mjs` and `node --test test/` green.
-- FIX1 done: per-project GitHub source links removed (repos are private; profile + this page's source only).
-  Latest-strip and latest-miss links are HEAD/GET-checked at build (8 s, fallback host when the custom domain
-  gives no answer); non-200 items are skipped, unverifiable lists keep the snapshot. robots.txt + sitemap.xml added.
+- FIX2 owner redesign built ("daylight studio"): light-first pastel look (Onest, mint/sky/lilac/rose tints, CSS aurora),
+  v2 content (862ebe6) restored as the base, raw-results/miss section gone, latest strip = finished public work only
+  (ok + 200 / playable / published, junk-word filter, friendly titles). DESIGN.md is the plan of record; INSPIRATION.md
+  holds the reference sites. Checked at 8 widths in Chromium and WebKit, light and dark; Lighthouse mobile local 99/100/100/100.
+- Earlier: per-project source links removed, latest links verified at build, robots.txt + sitemap.xml.
 
 ## Next step
-- Owner review of the live page after the next deploy; refresh `site/media` captures when the project sites change.
-- Owner decision: Model Reviewer publishes no run page for failed runs (all 404), so the "Latest miss" card is
-  currently hidden and the raw-results copy "every one of them has a public page" is not true today.
+- Owner review of the light build after the next deploy (not deployed from here).
+- Model Reviewer run hrefs still carry run ids (its only URL form); visible text is clean.
 
 ## Gotchas
 - Never output a pages.dev URL; fallback hosts are fetch-only (scripts/fetch-data.mjs).
 - The CI content check bans the capitalised three-letter word for the keyboard key that moves focus; say "keyboard".
+- WebKit (Playwright, Linux) composites a premultiplied WebGL canvas and gradients to `transparent` through grey: keep the
+  aurora in CSS and fade colours to their own zero-alpha value.
+- Playwright needs PLAYWRIGHT_BROWSERS_PATH=~/.cache/ms-playwright here (chromium-1140, webkit-2083 installed).
 - Headless Playwright Chromium cannot play H.264, so the preview loops show a failed request there; real browsers play them.
 - Model Reviewer failed runs (dnf/error/timeout) have no `/r/` page yet; ok runs do.
 - This machine's DNS for the custom domains flakes intermittently; the link check retries the fallback host.
@@ -29,3 +31,4 @@ Handoff note. Keep it short.
 ## Session log
 - 2026-10-23 16:25Z Claude Code/claude-opus-5-5: v3 contact-sheet redesign (data fetch + snapshot, prerendered page, WebGL hero, OG card, tests, CI extras). Lighthouse mobile local 99/100/100/100. Next: owner review after deploy.
 - 2026-10-23 16:40Z Claude Code/claude-opus-5-5: FIX1 (drop private-repo source links, verify latest links at build, allSettled fetch, robots.txt + sitemap.xml); 10 tests green. Next: owner call on the miss card / raw copy.
+- 2026-10-23 17:12Z Claude Code/claude-opus-5-5: FIX2 light redesign (content from 862ebe6, strict latest filter, CSS aurora, Onest, new og.png, DESIGN.md plan of record, INSPIRATION.md); Chromium + WebKit at 8 widths. Next: owner review.

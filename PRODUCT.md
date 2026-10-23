@@ -14,7 +14,9 @@ The public home of mjyoke1111, someone who builds with AI in public. One page at
 Developers, AI-curious builders and model watchers arriving from X, GitHub and YouTube, often on a phone. They want proof, not pitch: what did the models actually make, where did they fail.
 
 ## Voice
-First person, plain, specific, honest. Numbers over adjectives. Failures shown. No hype words, no "welcome to my portfolio".
+First person, plain, specific, honest. Numbers over adjectives. No hype words, no "welcome to my portfolio".
+The portfolio shows finished, public work only (owner, 2026-10-23): no failure counts, staged or unfinished items, run ids
+or internal labels. The raw failures live on Model Reviewer itself.
 
 ## Constraints
 - Custom domains only in output; never a pages.dev URL.

@@ -1,131 +1,69 @@
 {
  "mr": {
-  "harnessRuns": [
-   {
-    "name": "Raw API, no harness",
-    "runs": 2097
-   },
-   {
-    "name": "OpenCode",
-    "runs": 392
-   },
-   {
-    "name": "Claude Code",
-    "runs": 270
-   },
-   {
-    "name": "Codex CLI",
-    "runs": 197
-   },
-   {
-    "name": "Cline CLI",
-    "runs": 67
-   },
-   {
-    "name": "Pi",
-    "runs": 25
-   },
-   {
-    "name": "dsh",
-    "runs": 22
-   },
-   {
-    "name": "Hermes Agent",
-    "runs": 19
-   },
-   {
-    "name": "Kimi Code CLI",
-    "runs": 15
-   },
-   {
-    "name": "Oh My Pi (omp)",
-    "runs": 8
-   },
-   {
-    "name": "Kilo Code CLI",
-    "runs": 6
-   },
-   {
-    "name": "Grok Build",
-    "runs": 4
-   }
-  ],
   "stats": {
    "models": 30,
    "runs": 3122,
-   "ok": 2557,
-   "notOk": 565,
    "harnesses": 13,
    "prompts": 576,
-   "vendors": 19,
-   "byStatus": {
-    "ok": 2557,
-    "dnf": 384,
-    "stopped_by_our_timeout": 27,
-    "stopped_by_us": 79,
-    "harness_config_failure": 4,
-    "harness_mismatch": 10,
-    "infra_dnf": 8,
-    "error": 53
-   }
-  },
-  "statusLabels": {
-   "ok": "OK",
-   "dnf": "DNF",
-   "stopped_by_our_timeout": "Stopped (our timeout)",
-   "stopped_by_us": "Stopped by us",
-   "harness_config_failure": "Harness-config failure (ours)",
-   "harness_mismatch": "Harness + model mismatch",
-   "infra_dnf": "Infrastructure DNF",
-   "error": "Error"
+   "vendors": 19
   },
   "latest": [
    {
     "project": "mr",
     "label": "Model Reviewer",
     "title": "Interactive soap bubbles",
-    "sub": "GPT-6 Astra · Codex CLI",
+    "sub": "GPT-6 Astra",
+    "key": "interactive_soap_bubbles__codex__gpt-6-astra__attempt1",
     "date": "2026-10-23",
     "href": "https://mr.mjyoke1111.biz.id/r/interactive_soap_bubbles__codex__gpt-6-astra__attempt1/",
     "thumbSrc": "https://mr.mjyoke1111.biz.id/thumbs/interactive_soap_bubbles__codex__gpt-6-astra__attempt1.webp",
-    "status": "ok",
-    "note": "Finished on its own after 17.9 min."
+    "status": "ok"
    },
    {
     "project": "mr",
     "label": "Model Reviewer",
     "title": "Black hole lensing custom bloom",
-    "sub": "GPT-6 Astra · Codex CLI",
+    "sub": "GPT-6 Astra",
+    "key": "black_hole_lensing_custom_bloom__codex__gpt-6-astra__attempt1",
     "date": "2026-10-23",
     "href": "https://mr.mjyoke1111.biz.id/r/black_hole_lensing_custom_bloom__codex__gpt-6-astra__attempt1/",
     "thumbSrc": "https://mr.mjyoke1111.biz.id/thumbs/black_hole_lensing_custom_bloom__codex__gpt-6-astra__attempt1.webp",
-    "status": "ok",
-    "note": "Finished on its own after 29.2 min."
+    "status": "ok"
    },
    {
     "project": "mr",
     "label": "Model Reviewer",
     "title": "Lunar lander floaty physics",
-    "sub": "Claude Opus 5.5 · Claude Code",
+    "sub": "Claude Opus 5.5",
+    "key": "lunar_lander_floaty_physics__claude-code__opus-5-5-high__attempt1",
     "date": "2026-10-23",
     "href": "https://mr.mjyoke1111.biz.id/r/lunar_lander_floaty_physics__claude-code__opus-5-5-high__attempt1/",
     "thumbSrc": "https://mr.mjyoke1111.biz.id/thumbs/lunar_lander_floaty_physics__claude-code__opus-5-5-high__attempt1.webp",
-    "status": "ok",
-    "note": "Finished on its own after 9.1 min."
+    "status": "ok"
    },
    {
     "project": "mr",
     "label": "Model Reviewer",
     "title": "Interactive soap bubbles",
-    "sub": "Claude Opus 5.5 · Claude Code",
+    "sub": "Claude Opus 5.5",
+    "key": "interactive_soap_bubbles__claude-code__opus-5-5-high__attempt1",
     "date": "2026-10-23",
     "href": "https://mr.mjyoke1111.biz.id/r/interactive_soap_bubbles__claude-code__opus-5-5-high__attempt1/",
     "thumbSrc": "https://mr.mjyoke1111.biz.id/thumbs/interactive_soap_bubbles__claude-code__opus-5-5-high__attempt1.webp",
-    "status": "ok",
-    "note": "Finished on its own after 17.2 min."
+    "status": "ok"
+   },
+   {
+    "project": "mr",
+    "label": "Model Reviewer",
+    "title": "Black hole lensing custom bloom",
+    "sub": "Claude Opus 5.5",
+    "key": "black_hole_lensing_custom_bloom__claude-code__opus-5-5-high__attempt1",
+    "date": "2026-10-23",
+    "href": "https://mr.mjyoke1111.biz.id/r/black_hole_lensing_custom_bloom__claude-code__opus-5-5-high__attempt1/",
+    "thumbSrc": "https://mr.mjyoke1111.biz.id/thumbs/black_hole_lensing_custom_bloom__claude-code__opus-5-5-high__attempt1.webp",
+    "status": "ok"
    }
-  ],
-  "miss": null
+  ]
  },
  "games": {
   "stats": {
@@ -137,7 +75,9 @@
     "project": "games",
     "label": "AI Game Studio",
     "title": "VOIDLANCE",
-    "sub": "Claude Opus 5.5 · Claude Code",
+    "key": "voidlance",
+    "status": "playable",
+    "sub": "Claude Opus 5.5",
     "date": "2026-10-11",
     "href": "https://games.mjyoke1111.biz.id/games/voidlance/",
     "thumbSrc": "https://games.mjyoke1111.biz.id/games/voidlance/media/poster.jpg",
@@ -147,7 +87,9 @@
     "project": "games",
     "label": "AI Game Studio",
     "title": "SIGNAL BLEED",
-    "sub": "Claude Opus 5.5 · Claude Code",
+    "key": "signal-bleed",
+    "status": "playable",
+    "sub": "Claude Opus 5.5",
     "date": "2026-10-08",
     "href": "https://games.mjyoke1111.biz.id/games/signal-bleed/",
     "thumbSrc": "https://games.mjyoke1111.biz.id/games/signal-bleed/media/poster.jpg",
@@ -157,7 +99,9 @@
     "project": "games",
     "label": "AI Game Studio",
     "title": "Sunset Ridge Time Trial",
-    "sub": "Claude Opus 5.5 · Claude Code",
+    "key": "sunset-ridge-time-trial",
+    "status": "playable",
+    "sub": "Claude Opus 5.5",
     "date": "2026-09-27",
     "href": "https://games.mjyoke1111.biz.id/games/sunset-ridge-time-trial/",
     "thumbSrc": "https://games.mjyoke1111.biz.id/games/sunset-ridge-time-trial/media/poster.jpg",
@@ -167,62 +111,39 @@
     "project": "games",
     "label": "AI Game Studio",
     "title": "Neon Lanes",
-    "sub": "Claude Opus 5.5 · Claude Code",
+    "key": "neon-lanes",
+    "status": "playable",
+    "sub": "Claude Opus 5.5",
     "date": "2026-09-27",
     "href": "https://games.mjyoke1111.biz.id/games/neon-lanes/",
     "thumbSrc": "https://games.mjyoke1111.biz.id/games/neon-lanes/media/poster.jpg",
     "genre": "four-lane rhythm game"
+   },
+   {
+    "project": "games",
+    "label": "AI Game Studio",
+    "title": "Circuit Siege — Tower Defense",
+    "key": "circuit-siege",
+    "status": "playable",
+    "sub": "Claude Opus 5.5",
+    "date": "2026-09-27",
+    "href": "https://games.mjyoke1111.biz.id/games/circuit-siege/",
+    "thumbSrc": "https://games.mjyoke1111.biz.id/games/circuit-siege/media/poster.jpg",
+    "genre": "tower defense"
    }
   ]
  },
  "jev": {
   "stats": {
    "jev": 18
-  },
-  "latest": [
-   {
-    "project": "jev",
-    "label": "JevLab",
-    "title": "Jev calibration",
-    "sub": "Does Jev's confidence mean anything? A reliability chart built from every Jev demo's cached answers, per demo and pooled, with bin counts.",
-    "date": "2026-10-23",
-    "href": "https://jev.lab.mjyoke1111.biz.id/labs/jev-calibration/",
-    "thumbSrc": "https://jev.lab.mjyoke1111.biz.id/labs/jev-calibration/thumb.webp"
-   },
-   {
-    "project": "jev",
-    "label": "JevLab",
-    "title": "Jev slop feed",
-    "sub": "Real Jev reads a feed of 30 constructed posts and dims the generic filler; tune the threshold and watch precision and recall.",
-    "date": "2026-10-23",
-    "href": "https://jev.lab.mjyoke1111.biz.id/labs/jev-slop-feed/",
-    "thumbSrc": "https://jev.lab.mjyoke1111.biz.id/labs/jev-slop-feed/thumb.webp"
-   },
-   {
-    "project": "jev",
-    "label": "JevLab",
-    "title": "Jev model router",
-    "sub": "Real Jev picks a small, medium or large model for 30 constructed prompts; see the cost against always using the largest and every under-routed prompt.",
-    "date": "2026-10-23",
-    "href": "https://jev.lab.mjyoke1111.biz.id/labs/jev-model-router/",
-    "thumbSrc": "https://jev.lab.mjyoke1111.biz.id/labs/jev-model-router/thumb.webp"
-   },
-   {
-    "project": "jev",
-    "label": "JevLab",
-    "title": "Jev tool guard",
-    "sub": "Real Jev reviews every tool call in three agent traces and blocks the planted out-of-scope or destructive ones.",
-    "date": "2026-10-23",
-    "href": "https://jev.lab.mjyoke1111.biz.id/labs/jev-tool-guard/",
-    "thumbSrc": "https://jev.lab.mjyoke1111.biz.id/labs/jev-tool-guard/thumb.webp"
-   }
-  ]
+  }
  },
  "aica": [
   {
    "project": "aica",
    "label": "AI Coding Arena",
    "title": "Why AI benchmark scores can lie #shorts",
+   "status": "published",
    "sub": "AI Coding Arena",
    "date": "2026-10-23",
    "href": "https://www.youtube.com/watch?v=LemymjSNAdg",
@@ -232,6 +153,7 @@
    "project": "aica",
    "label": "AI Coding Arena",
    "title": "Benchmark contamination: why AI leaderboard scores can lie",
+   "status": "published",
    "sub": "AI Coding Arena",
    "date": "2026-10-23",
    "href": "https://www.youtube.com/watch?v=V0IVuvs42ok",
@@ -241,6 +163,7 @@
    "project": "aica",
    "label": "AI Coding Arena",
    "title": "Why your AI coding agent gets worse the longer you talk #shorts",
+   "status": "published",
    "sub": "AI Coding Arena",
    "date": "2026-10-23",
    "href": "https://www.youtube.com/watch?v=955Ueo6I7I8",
@@ -252,6 +175,7 @@
    "project": "dil",
    "label": "Dil Mon Music",
    "title": "Shohor Ghumay Na | শহর ঘুমায় না | The City Never Sleeps (Original Song)",
+   "status": "published",
    "sub": "Dil Mon Music",
    "date": "2026-10-23",
    "href": "https://www.youtube.com/watch?v=WSLyy3wUnc4",
@@ -261,6 +185,7 @@
    "project": "dil",
    "label": "Dil Mon Music",
    "title": "Velocity Thread (Original Instrumental) - Drum and Bass Rush",
+   "status": "published",
    "sub": "Dil Mon Music",
    "date": "2026-10-23",
    "href": "https://www.youtube.com/watch?v=BaDv6dgjFf0",
@@ -270,6 +195,7 @@
    "project": "dil",
    "label": "Dil Mon Music",
    "title": "Iron Horizon (Original Instrumental) - Cinematic Orchestral Rise",
+   "status": "published",
    "sub": "Dil Mon Music",
    "date": "2026-10-23",
    "href": "https://www.youtube.com/watch?v=B4qvQ_zVWy4",
@@ -277,5 +203,5 @@
   }
  ],
  "videos": 210,
- "savedAt": "2026-10-23T16:38:07.774Z"
+ "savedAt": "2026-10-23T17:12:50.183Z"
 }

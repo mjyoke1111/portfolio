@@ -16,7 +16,7 @@ const walk = (d) => readdirSync(d).flatMap((f) => (statSync(join(d, f)).isDirect
 const textFiles = walk(dist).filter((f) => /\.(html|json|css|js|svg|txt)$|_headers$/.test(f));
 
 test('dist builds with the page and its assets', () => {
-  for (const f of ['index.html', 'data.json', 'og.png', 'favicon.svg', 'fonts/archivo.woff2', 'robots.txt', 'sitemap.xml']) assert.ok(existsSync(join(dist, f)), f);
+  for (const f of ['index.html', 'data.json', 'og.png', 'favicon.svg', 'fonts/onest.woff2', 'robots.txt', 'sitemap.xml']) assert.ok(existsSync(join(dist, f)), f);
   assert.ok(!existsSync(join(dist, 'data', 'snapshot.json')), 'snapshot stays out of dist');
 });
 
@@ -57,11 +57,37 @@ test('stats are prerendered from build data', () => {
 });
 
 test('latest strip is filled from every project', () => {
-  const shots = html.match(/<li class="shot">/g) || [];
+  const shots = html.match(/<li class="shot /g) || [];
   assert.ok(shots.length >= 10, `${shots.length} latest items`);
-  for (const h of ['href="https://mr.mjyoke1111.biz.id/r/', 'href="https://games.mjyoke1111.biz.id/games/', 'href="https://jev.lab.mjyoke1111.biz.id/labs/', 'href="https://www.youtube.com/watch?v=']) {
+  for (const h of ['href="https://mr.mjyoke1111.biz.id/r/', 'href="https://games.mjyoke1111.biz.id/games/', 'href="https://www.youtube.com/watch?v=']) {
     assert.ok(html.includes(h), h);
   }
+});
+
+test('latest strip holds only finished, public work', () => {
+  const junk = /demo|sample|test|dnf|placeholder|wip/i;
+  const items = [...data.mr.latest, ...data.games.latest, ...data.aica, ...data.dil];
+  for (const it of items) {
+    assert.ok(['ok', 'playable', 'published'].includes(it.status), `${it.title}: ${it.status}`);
+    assert.ok(!junk.test(it.title) && !junk.test(it.key || ''), it.title);
+  }
+  for (const it of data.mr.latest) assert.ok(!/ · /.test(it.sub), `MR subtitle is the model only: ${it.sub}`);
+});
+
+test('visible text is clean: no ids, internal labels or failure words', () => {
+  const visible = html.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/g, ' ')
+    .replace(/<[^>]*\b(?:alt|aria-label|title|content)="([^"]*)"[^>]*>/g, ' $1 ').replace(/<[^>]+>/g, ' ');
+  for (const re of [/dnf|demo|sample|placeholder|lorem|not run|attempt[0-9_]|__/i, /\b(failed|failures?|errored|error|did not finish|stopped|crashed)\b/i]) {
+    const m = visible.match(re);
+    assert.ok(!m, `visible text has "${m && m[0]}"`);
+  }
+  assert.ok(!html.includes('id="raw"'), 'no raw-results section');
+});
+
+test('light by default, dark on request, motion and hover guarded', () => {
+  assert.ok(!/<html[^>]*data-theme/.test(html), 'no theme baked into the page');
+  assert.ok(html.includes('<meta name="theme-color" content="#f7f7f4">'));
+  for (const s of ['prefers-reduced-motion', '(hover: hover)', 'env(safe-area-inset-left)', 'clamp(']) assert.ok(html.includes(s), s);
 });
 
 test('meta, canonical and share tags are present', () => {

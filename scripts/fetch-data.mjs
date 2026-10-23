@@ -91,6 +91,11 @@ export function prettyModel(s = '') {
   }
   return out.join(' ');
 }
+// Only finished, public work reaches the strip: nothing unfinished, staged or internal by its title or id.
+// (YouTube ids are random, so videos are judged by title alone.)
+const JUNK = /demo|sample|test|dnf|placeholder|wip/i;
+const LIVE = ['ok', 'playable', 'published'];
+export const keep = (x) => !!x && LIVE.includes(x.status) && !JUNK.test(x.title || '') && !JUNK.test(x.key || '');
 const humanize = (id) => { const s = String(id).replace(/[_-]+/g, ' ').trim(); return s[0].toUpperCase() + s.slice(1); };
 const day = (s) => (s ? String(s).slice(0, 10) : '');
 
@@ -105,34 +110,14 @@ async function modelReviewer() {
   };
   const when = (x) => x.started_utc || x.run_date || '';
   const item = (x) => ({
-    project: 'mr', label: 'Model Reviewer', title: title(x),
-    sub: `${prettyModel(x.model)} · ${x.harness_family === 'none (raw API)' ? 'raw API' : x.harness_family}`,
+    project: 'mr', label: 'Model Reviewer', title: title(x), sub: prettyModel(x.model), key: x.id || x.url,
     date: day(when(x)), href: SITES.mr + x.url, thumbSrc: SITES.mr + x.artifacts.thumb, status: x.status,
-    note: x.status_note || '',
   });
   const sorted = r.results.filter((x) => x.artifacts && x.artifacts.thumb).sort((a, b) => String(when(b)).localeCompare(String(when(a))));
-  // The miss is the newest run that failed on the model's side (not stopped by us). Its link is checked
-  // like the strip's; `missed` is null when that check was impossible, and fetchData keeps the snapshot's.
-  const [latest, missed] = await Promise.all([
-    pickLive(sorted.filter((x) => x.status === 'ok').map(item), 4),
-    pickLive(sorted.filter((x) => ['dnf', 'error', 'stopped_by_our_timeout'].includes(x.status)), 1, (x) => SITES.mr + x.url),
-  ]);
-  const missX = missed && missed[0];
-  const per = {};
-  for (const x of r.results) {
-    const h = x.harness_family === 'none (raw API)' ? 'Raw API, no harness' : String(x.harness_family || '').replace(/\s+\d[\d.]*.*$/, '').trim();
-    if (h) per[h] = (per[h] || 0) + 1;
-  }
-  const harnessRuns = Object.entries(per).sort((p, q) => q[1] - p[1]).map(([name, runs]) => ({ name, runs }));
+  const latest = await pickLive(sorted.map(item).filter((it, i) => keep(it) && !JUNK.test(sorted[i].prompt_id || '')), 5);
   return {
-    harnessRuns,
-    stats: {
-      models: c.models, runs: c.results, ok: c.ok, notOk: c.not_ok, harnesses: c.harnesses,
-      prompts: c.prompts, vendors: c.vendors, byStatus: c.by_status,
-    },
-    statusLabels: (r.labels && r.labels.statuses) || {},
+    stats: { models: c.models, runs: c.results, harnesses: c.harnesses, prompts: c.prompts, vendors: c.vendors },
     latest,
-    miss: missX ? { ...item(missX), statusLabel: (r.labels?.statuses || {})[missX.status] || missX.status } : missed === null ? undefined : null,
   };
 }
 
@@ -140,15 +125,15 @@ async function games() {
   const g = await firstOf(both('games', 'games.json'));
   const list = g.games || [];
   const pathOf = (x) => (x.path ? x.path.replace(/index\.html$/, '') : `games/${x.slug}/`);
-  const newest = await pickLive(list.slice().reverse(), 4, (x) => SITES.games + pathOf(x));
+  const newest = await pickLive(list.filter((x) => keep({ ...x, key: x.slug })).reverse(), 5, (x) => SITES.games + pathOf(x));
   if (!newest) return { stats: { games: list.length, tiers: (g.tiers || []).length }, latest: null };
   const metas = await Promise.all(newest.map((x) => firstOf(both('games', `games/${x.slug}/META.json`)).catch(() => null)));
   const latest = newest.map((x, i) => {
     const m = metas[i] || {};
     const path = pathOf(x);
     return {
-      project: 'games', label: 'AI Game Studio', title: x.title,
-      sub: `${m.model_label || prettyModel(x.model)} · ${x.harness}`,
+      project: 'games', label: 'AI Game Studio', title: x.title, key: x.slug, status: x.status,
+      sub: m.model_label || prettyModel(x.model),
       date: day(m.date || m.build_ended_utc), href: SITES.games + path,
       thumbSrc: x.poster ? SITES.games + x.poster : '', genre: x.genre,
     };
@@ -158,14 +143,7 @@ async function games() {
 
 async function jev() {
   const cat = await firstOf(both('jev', 'labs/catalogue.json'));
-  // Same `added` date: later in the catalogue counts as newer.
-  const latest = await pickLive(cat.map((x, i) => ({ x, i }))
-    .sort((a, b) => String(b.x.added).localeCompare(String(a.x.added)) || b.i - a.i)
-    .map(({ x }) => ({
-      project: 'jev', label: 'JevLab', title: x.title, sub: x.summary, date: day(x.added),
-      href: `${SITES.jev}labs/${x.slug}/`, thumbSrc: x.thumbnail ? `${SITES.jev}labs/${x.slug}/${x.thumbnail}` : '',
-    })), 4);
-  return { stats: { jev: cat.length }, latest };
+  return { stats: { jev: cat.length } };
 }
 
 const unxml = (s) => s.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"').replace(/&#39;/g, "'");
@@ -175,11 +153,11 @@ async function feed(key) {
   return pickLive([...xml.matchAll(/<entry>([\s\S]*?)<\/entry>/g)].map(([, e]) => {
     const id = (e.match(/<yt:videoId>([^<]+)/) || [])[1];
     return {
-      project: key, label: ch.label, title: unxml((e.match(/<title>([^<]*)/) || [])[1] || ''),
+      project: key, label: ch.label, title: unxml((e.match(/<title>([^<]*)/) || [])[1] || ''), status: 'published',
       sub: ch.label, date: day((e.match(/<published>([^<]+)/) || [])[1]),
       href: `https://www.youtube.com/watch?v=${id}`, thumbSrc: `https://i.ytimg.com/vi/${id}/mqdefault.jpg`,
     };
-  }), 3);
+  }).filter(keep), 3);
 }
 
 // Long-form + Shorts for both channels, via yt-dlp when it is installed. Optional, capped at ~45 s.
@@ -215,15 +193,18 @@ export async function fetchData() {
       console.log(`data: ${k} from snapshot (${String(e.message).slice(0, 100)})`);
     }
   }
-  // Latest-strip lists whose links could not be checked at all keep the snapshot's items.
-  for (const k of ['mr', 'games', 'jev', 'aica', 'dil']) {
+  // Latest-strip lists whose links could not be checked at all keep the snapshot's items. Whatever the
+  // source, the same filter runs last, so an older snapshot cannot bring back unfinished work.
+  for (const k of ['mr', 'games', 'aica', 'dil']) {
     const list = k === 'aica' || k === 'dil';
-    if ((list ? out[k] : out[k].latest) !== null) continue;
-    const kept = (list ? snap[k] : snap[k] && snap[k].latest) || [];
-    if (list) out[k] = kept; else out[k].latest = kept;
-    console.log(`data: ${k} latest from snapshot (links could not be checked)`);
+    let items = list ? out[k] : out[k].latest;
+    if (items === null) {
+      items = (list ? snap[k] : snap[k] && snap[k].latest) || [];
+      console.log(`data: ${k} latest from snapshot (links could not be checked)`);
+    }
+    items = items.filter(keep);
+    if (list) out[k] = items; else out[k].latest = items;
   }
-  if (out.mr.miss === undefined) out.mr.miss = (snap.mr && snap.mr.miss) || null;
   if (Object.values(sources).includes('live')) {
     const { builtAt, sources: _s, ...prev } = snap;
     writeFileSync(SNAPSHOT, JSON.stringify({ ...prev, ...out, savedAt: new Date().toISOString() }, null, 1) + '\n');

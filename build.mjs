@@ -1,4 +1,4 @@
-// Portfolio v3: fetch build-time data, copy site/ into dist/, localise the latest thumbnails, prerender index.html.
+// Portfolio: fetch build-time data, copy site/ into dist/, localise the latest thumbnails, prerender index.html.
 import { cpSync, rmSync, mkdirSync, writeFileSync } from 'node:fs';
 import { execFile } from 'node:child_process';
 import { tmpdir } from 'node:os';
@@ -37,9 +37,8 @@ async function localise(item, name) {
   } catch { /* keep the remote URL */ }
 }
 const jobs = [];
-for (const k of ['mr', 'games', 'jev']) data[k].latest.forEach((it, i) => jobs.push([it, `${k}-${i + 1}`]));
+for (const k of ['mr', 'games']) data[k].latest.forEach((it, i) => jobs.push([it, `${k}-${i + 1}`]));
 for (const k of ['aica', 'dil']) data[k].forEach((it, i) => jobs.push([it, `${k}-${i + 1}`]));
-if (data.mr.miss) jobs.push([data.mr.miss, 'mr-miss']);
 // Four at a time, so no host sees a burst.
 await Promise.all([0, 1, 2, 3].map(async () => { for (let j; (j = jobs.shift());) await localise(...j); }));
 
