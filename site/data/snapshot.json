@@ -1,0 +1,292 @@
+{
+ "mr": {
+  "harnessRuns": [
+   {
+    "name": "Raw API, no harness",
+    "runs": 2097
+   },
+   {
+    "name": "OpenCode",
+    "runs": 392
+   },
+   {
+    "name": "Claude Code",
+    "runs": 270
+   },
+   {
+    "name": "Codex CLI",
+    "runs": 197
+   },
+   {
+    "name": "Cline CLI",
+    "runs": 67
+   },
+   {
+    "name": "Pi",
+    "runs": 25
+   },
+   {
+    "name": "dsh",
+    "runs": 22
+   },
+   {
+    "name": "Hermes Agent",
+    "runs": 19
+   },
+   {
+    "name": "Kimi Code CLI",
+    "runs": 15
+   },
+   {
+    "name": "Oh My Pi (omp)",
+    "runs": 8
+   },
+   {
+    "name": "Kilo Code CLI",
+    "runs": 6
+   },
+   {
+    "name": "Grok Build",
+    "runs": 4
+   }
+  ],
+  "stats": {
+   "models": 30,
+   "runs": 3122,
+   "ok": 2557,
+   "notOk": 565,
+   "harnesses": 13,
+   "prompts": 576,
+   "vendors": 19,
+   "byStatus": {
+    "ok": 2557,
+    "dnf": 384,
+    "stopped_by_our_timeout": 27,
+    "stopped_by_us": 79,
+    "harness_config_failure": 4,
+    "harness_mismatch": 10,
+    "infra_dnf": 8,
+    "error": 53
+   }
+  },
+  "statusLabels": {
+   "ok": "OK",
+   "dnf": "DNF",
+   "stopped_by_our_timeout": "Stopped (our timeout)",
+   "stopped_by_us": "Stopped by us",
+   "harness_config_failure": "Harness-config failure (ours)",
+   "harness_mismatch": "Harness + model mismatch",
+   "infra_dnf": "Infrastructure DNF",
+   "error": "Error"
+  },
+  "latest": [
+   {
+    "project": "mr",
+    "label": "Model Reviewer",
+    "title": "Interactive soap bubbles",
+    "sub": "GPT-6 Astra · Codex CLI",
+    "date": "2026-10-23",
+    "href": "https://mr.mjyoke1111.biz.id/r/interactive_soap_bubbles__codex__gpt-6-astra__attempt1/",
+    "thumbSrc": "https://mr.mjyoke1111.biz.id/thumbs/interactive_soap_bubbles__codex__gpt-6-astra__attempt1.webp",
+    "status": "ok",
+    "note": "Finished on its own after 17.9 min."
+   },
+   {
+    "project": "mr",
+    "label": "Model Reviewer",
+    "title": "Black hole lensing custom bloom",
+    "sub": "GPT-6 Astra · Codex CLI",
+    "date": "2026-10-23",
+    "href": "https://mr.mjyoke1111.biz.id/r/black_hole_lensing_custom_bloom__codex__gpt-6-astra__attempt1/",
+    "thumbSrc": "https://mr.mjyoke1111.biz.id/thumbs/black_hole_lensing_custom_bloom__codex__gpt-6-astra__attempt1.webp",
+    "status": "ok",
+    "note": "Finished on its own after 29.2 min."
+   },
+   {
+    "project": "mr",
+    "label": "Model Reviewer",
+    "title": "Lunar lander floaty physics",
+    "sub": "Claude Opus 5.5 · Claude Code",
+    "date": "2026-10-23",
+    "href": "https://mr.mjyoke1111.biz.id/r/lunar_lander_floaty_physics__claude-code__opus-5-5-high__attempt1/",
+    "thumbSrc": "https://mr.mjyoke1111.biz.id/thumbs/lunar_lander_floaty_physics__claude-code__opus-5-5-high__attempt1.webp",
+    "status": "ok",
+    "note": "Finished on its own after 9.1 min."
+   },
+   {
+    "project": "mr",
+    "label": "Model Reviewer",
+    "title": "Interactive soap bubbles",
+    "sub": "Claude Opus 5.5 · Claude Code",
+    "date": "2026-10-23",
+    "href": "https://mr.mjyoke1111.biz.id/r/interactive_soap_bubbles__claude-code__opus-5-5-high__attempt1/",
+    "thumbSrc": "https://mr.mjyoke1111.biz.id/thumbs/interactive_soap_bubbles__claude-code__opus-5-5-high__attempt1.webp",
+    "status": "ok",
+    "note": "Finished on its own after 17.2 min."
+   }
+  ],
+  "miss": {
+   "project": "mr",
+   "label": "Model Reviewer",
+   "title": "Threejs artwork style pass",
+   "sub": "Gemini 3.5 Flash · raw API",
+   "date": "2026-10-02",
+   "href": "https://mr.mjyoke1111.biz.id/r/threejs_artwork_style_pass__api-oneshot__gemini-3.5-flash__attempt1/",
+   "thumbSrc": "https://mr.mjyoke1111.biz.id/thumbs/threejs_artwork_style_pass__api-oneshot__gemini-3.5-flash__attempt1.webp",
+   "status": "error",
+   "note": "The page was produced but fails at runtime: page script never started (no animation frame requested within 120 s): http 404 https://cdnjs.cloudflare.com/ajax/libs/three.js/r160/three.module.js; Failed to load resource: the server responded with a status of 404 (); requestfailed: https://cdnjs.cloudflare.com/ajax/libs/three.js/r160/three.modul",
+   "statusLabel": "Error"
+  }
+ },
+ "games": {
+  "stats": {
+   "games": 151,
+   "tiers": 3
+  },
+  "latest": [
+   {
+    "project": "games",
+    "label": "AI Game Studio",
+    "title": "VOIDLANCE",
+    "sub": "Claude Opus 5.5 · Claude Code",
+    "date": "2026-10-11",
+    "href": "https://games.mjyoke1111.biz.id/games/voidlance/",
+    "thumbSrc": "https://games.mjyoke1111.biz.id/games/voidlance/media/poster.jpg",
+    "genre": "cinematic 3D on-rails space shooter with a multi-lock missile volley"
+   },
+   {
+    "project": "games",
+    "label": "AI Game Studio",
+    "title": "SIGNAL BLEED",
+    "sub": "Claude Opus 5.5 · Claude Code",
+    "date": "2026-10-08",
+    "href": "https://games.mjyoke1111.biz.id/games/signal-bleed/",
+    "thumbSrc": "https://games.mjyoke1111.biz.id/games/signal-bleed/media/poster.jpg",
+    "genre": "top-down twin-stick shooter with bullet-hell boss patterns"
+   },
+   {
+    "project": "games",
+    "label": "AI Game Studio",
+    "title": "Sunset Ridge Time Trial",
+    "sub": "Claude Opus 5.5 · Claude Code",
+    "date": "2026-09-27",
+    "href": "https://games.mjyoke1111.biz.id/games/sunset-ridge-time-trial/",
+    "thumbSrc": "https://games.mjyoke1111.biz.id/games/sunset-ridge-time-trial/media/poster.jpg",
+    "genre": "racing time trial (pseudo-3D)"
+   },
+   {
+    "project": "games",
+    "label": "AI Game Studio",
+    "title": "Neon Lanes",
+    "sub": "Claude Opus 5.5 · Claude Code",
+    "date": "2026-09-27",
+    "href": "https://games.mjyoke1111.biz.id/games/neon-lanes/",
+    "thumbSrc": "https://games.mjyoke1111.biz.id/games/neon-lanes/media/poster.jpg",
+    "genre": "four-lane rhythm game"
+   }
+  ]
+ },
+ "jev": {
+  "stats": {
+   "jev": 18
+  },
+  "latest": [
+   {
+    "project": "jev",
+    "label": "JevLab",
+    "title": "Jev calibration",
+    "sub": "Does Jev's confidence mean anything? A reliability chart built from every Jev demo's cached answers, per demo and pooled, with bin counts.",
+    "date": "2026-10-23",
+    "href": "https://jev.lab.mjyoke1111.biz.id/labs/jev-calibration/",
+    "thumbSrc": "https://jev.lab.mjyoke1111.biz.id/labs/jev-calibration/thumb.webp"
+   },
+   {
+    "project": "jev",
+    "label": "JevLab",
+    "title": "Jev slop feed",
+    "sub": "Real Jev reads a feed of 30 constructed posts and dims the generic filler; tune the threshold and watch precision and recall.",
+    "date": "2026-10-23",
+    "href": "https://jev.lab.mjyoke1111.biz.id/labs/jev-slop-feed/",
+    "thumbSrc": "https://jev.lab.mjyoke1111.biz.id/labs/jev-slop-feed/thumb.webp"
+   },
+   {
+    "project": "jev",
+    "label": "JevLab",
+    "title": "Jev model router",
+    "sub": "Real Jev picks a small, medium or large model for 30 constructed prompts; see the cost against always using the largest and every under-routed prompt.",
+    "date": "2026-10-23",
+    "href": "https://jev.lab.mjyoke1111.biz.id/labs/jev-model-router/",
+    "thumbSrc": "https://jev.lab.mjyoke1111.biz.id/labs/jev-model-router/thumb.webp"
+   },
+   {
+    "project": "jev",
+    "label": "JevLab",
+    "title": "Jev tool guard",
+    "sub": "Real Jev reviews every tool call in three agent traces and blocks the planted out-of-scope or destructive ones.",
+    "date": "2026-10-23",
+    "href": "https://jev.lab.mjyoke1111.biz.id/labs/jev-tool-guard/",
+    "thumbSrc": "https://jev.lab.mjyoke1111.biz.id/labs/jev-tool-guard/thumb.webp"
+   }
+  ]
+ },
+ "aica": [
+  {
+   "project": "aica",
+   "label": "AI Coding Arena",
+   "title": "Why AI benchmark scores can lie #shorts",
+   "sub": "AI Coding Arena",
+   "date": "2026-10-23",
+   "href": "https://www.youtube.com/watch?v=LemymjSNAdg",
+   "thumbSrc": "https://i.ytimg.com/vi/LemymjSNAdg/mqdefault.jpg"
+  },
+  {
+   "project": "aica",
+   "label": "AI Coding Arena",
+   "title": "Benchmark contamination: why AI leaderboard scores can lie",
+   "sub": "AI Coding Arena",
+   "date": "2026-10-23",
+   "href": "https://www.youtube.com/watch?v=V0IVuvs42ok",
+   "thumbSrc": "https://i.ytimg.com/vi/V0IVuvs42ok/mqdefault.jpg"
+  },
+  {
+   "project": "aica",
+   "label": "AI Coding Arena",
+   "title": "Why your AI coding agent gets worse the longer you talk #shorts",
+   "sub": "AI Coding Arena",
+   "date": "2026-10-23",
+   "href": "https://www.youtube.com/watch?v=955Ueo6I7I8",
+   "thumbSrc": "https://i.ytimg.com/vi/955Ueo6I7I8/mqdefault.jpg"
+  }
+ ],
+ "dil": [
+  {
+   "project": "dil",
+   "label": "Dil Mon Music",
+   "title": "Shohor Ghumay Na | শহর ঘুমায় না | The City Never Sleeps (Original Song)",
+   "sub": "Dil Mon Music",
+   "date": "2026-10-23",
+   "href": "https://www.youtube.com/watch?v=WSLyy3wUnc4",
+   "thumbSrc": "https://i.ytimg.com/vi/WSLyy3wUnc4/mqdefault.jpg"
+  },
+  {
+   "project": "dil",
+   "label": "Dil Mon Music",
+   "title": "Velocity Thread (Original Instrumental) - Drum and Bass Rush",
+   "sub": "Dil Mon Music",
+   "date": "2026-10-23",
+   "href": "https://www.youtube.com/watch?v=BaDv6dgjFf0",
+   "thumbSrc": "https://i.ytimg.com/vi/BaDv6dgjFf0/mqdefault.jpg"
+  },
+  {
+   "project": "dil",
+   "label": "Dil Mon Music",
+   "title": "Iron Horizon (Original Instrumental) - Cinematic Orchestral Rise",
+   "sub": "Dil Mon Music",
+   "date": "2026-10-23",
+   "href": "https://www.youtube.com/watch?v=B4qvQ_zVWy4",
+   "thumbSrc": "https://i.ytimg.com/vi/B4qvQ_zVWy4/mqdefault.jpg"
+  }
+ ],
+ "videos": 210,
+ "savedAt": "2026-10-23T16:18:16.176Z"
+}
