@@ -1,0 +1,4 @@
+/labs/* https://jev.lab.mjyoke1111.biz.id/labs/:splat 301
+/playgrounds https://jev.lab.mjyoke1111.biz.id/playgrounds 301
+/playgrounds/* https://jev.lab.mjyoke1111.biz.id/playgrounds/:splat 301
+/experiments.json https://jev.lab.mjyoke1111.biz.id/experiments.json 301
