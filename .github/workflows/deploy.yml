@@ -23,6 +23,9 @@ jobs:
         run: |
           npm i --no-save playwright@1.48.2 wrangler@3
           npx playwright install --with-deps chromium
+          # Optional extras for the build: yt-dlp counts videos, ffmpeg crops thumbnails. Both fall back if missing.
+          pipx install yt-dlp || true
+          command -v ffmpeg || (sudo apt-get install -y -qq ffmpeg) || true
       - name: Screenshots
         run: node shoot.mjs
       - name: Build
@@ -44,5 +47,5 @@ jobs:
       - name: Verify
         run: |
           sleep 15
-          code=$(curl -s -o /dev/null -w '%{http_code}' https://mjyoke1111.pages.dev/)
+          code=$(curl -s -o /dev/null -w '%{http_code}' https://www.mjyoke1111.biz.id/)
           echo "live: $code"; test "$code" = 200

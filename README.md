@@ -1,9 +1,42 @@
-# mjyoke1111 — Portfolio
+# mjyoke1111 — portfolio v3
 
-Source for [www.mjyoke1111.biz.id](https://www.mjyoke1111.biz.id): one page with the projects, games and videos.
+Source for [www.mjyoke1111.biz.id](https://www.mjyoke1111.biz.id/): one page for everything built with AI in public, with
+real numbers and the newest frames from every project.
 
-- `src/site.json` holds the copy and links.
-- `shoot.mjs` takes fresh desktop and mobile screenshots of each live site.
-- `build.mjs` pulls the current game list and video feeds and writes a single static page to `dist/`.
+- [Model Reviewer](https://mr.mjyoke1111.biz.id/) · [JevLab](https://jev.lab.mjyoke1111.biz.id/) · [Labs hub](https://lab.mjyoke1111.biz.id/) · [AI Game Studio](https://games.mjyoke1111.biz.id/)
+- YouTube: [AI Coding Arena](https://www.youtube.com/channel/UCAI_zEvJRJ4K48zl9YmZTUw) · [Dil Mon Music](https://www.youtube.com/@dilmonmusic)
 
-GitHub Actions rebuilds and deploys it on every push and every six hours, so new games and episodes show up on their own.
+## How it builds
+
+`node build.mjs` does everything:
+
+1. `scripts/fetch-data.mjs` pulls the Model Reviewer results, the game list (plus each newest game's META.json), the Jev
+   catalogue and both YouTube feeds, and counts videos with `yt-dlp` when it is installed. Each request has a 20 s timeout;
+   anything that fails comes from `site/data/snapshot.json`, which is refreshed whenever a fetch succeeds.
+2. `site/` is copied to `dist/` (the snapshot stays out).
+3. The latest thumbnails are cropped to 480x300 webp into `dist/latest/` with ffmpeg; without ffmpeg the page links them
+   from the project domains instead.
+4. `src/page.mjs` prerenders `dist/index.html` with `src/style.css` and `src/main.js` inlined, and `dist/data.json` holds
+   the merged data.
+
+Only the custom domains above ever appear in the output.
+
+## Pieces
+
+- `src/page.mjs`, `src/style.css`, `src/main.js`: the page. The hero light leak is a small hand-written WebGL shader,
+  paused offscreen and skipped under reduced motion; a CSS gradient stands in without it.
+- `site/media/`: hand-captured preview posters (.webp) and short muted loops (.mp4). Loops only play on wide screens with a
+  mouse, when in view; phones, save-data and reduced motion get the poster.
+- `site/fonts/archivo.woff2`: Archivo variable (weight + width axes, OFL), subset to Latin.
+- `src/og.html` + `scripts/og.mjs`: the 1200x630 share card. Run `node scripts/og.mjs` after a build to refresh
+  `site/og.png` (set `PLAYWRIGHT_MODULE` if playwright is installed elsewhere).
+- `shoot.mjs`: kept for the workflow; it leaves the committed media alone.
+- `test/site.test.cjs`: `node --test test/` builds and checks the output (custom domains only, stats present, share tags,
+  banned strings, page weight). `test/package.json` points newer Node versions at the file when given the folder.
+
+## Deploy
+
+GitHub Actions (`.github/workflows/deploy.yml`) runs `shoot.mjs`, `build.mjs` and a content check, then deploys `dist/` to
+Cloudflare Pages on every push to `main` and every six hours, so new runs, games, experiments and videos show up on their own.
+
+Design notes live in `DESIGN.md`; product facts in `PRODUCT.md`.

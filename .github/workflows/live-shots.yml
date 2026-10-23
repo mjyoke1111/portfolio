@@ -19,7 +19,7 @@ jobs:
           const b = await chromium.launch();
           for (const [n, o] of [['desktop', { viewport: { width: 1440, height: 900 } }], ['desktop-dark', { viewport: { width: 1440, height: 900 }, colorScheme: 'dark' }], ['mobile', { viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, isMobile: true, hasTouch: true }]]) {
             const c = await b.newContext(o); const p = await c.newPage();
-            await p.goto('https://mjyoke1111.pages.dev/', { waitUntil: 'networkidle' }); await p.waitForTimeout(1500);
+            await p.goto('https://www.mjyoke1111.biz.id/', { waitUntil: 'networkidle' }); await p.waitForTimeout(1500);
             await p.screenshot({ path: `${n}.png` });
             await p.screenshot({ path: `${n}-full.png`, fullPage: true });
             await c.close();
