@@ -16,7 +16,7 @@ const walk = (d) => readdirSync(d).flatMap((f) => (statSync(join(d, f)).isDirect
 const textFiles = walk(dist).filter((f) => /\.(html|json|css|js|svg|txt)$|_headers$/.test(f));
 
 test('dist builds with the page and its assets', () => {
-  for (const f of ['index.html', 'data.json', 'og.png', 'favicon.svg', 'fonts/archivo.woff2']) assert.ok(existsSync(join(dist, f)), f);
+  for (const f of ['index.html', 'data.json', 'og.png', 'favicon.svg', 'fonts/archivo.woff2', 'robots.txt', 'sitemap.xml']) assert.ok(existsSync(join(dist, f)), f);
   assert.ok(!existsSync(join(dist, 'data', 'snapshot.json')), 'snapshot stays out of dist');
 });
 
@@ -30,10 +30,21 @@ test('project links use the custom domains only', () => {
   for (const h of hrefs) assert.match(h, allowed, h);
   for (const site of ['https://mr.mjyoke1111.biz.id/', 'https://jev.lab.mjyoke1111.biz.id/', 'https://lab.mjyoke1111.biz.id/', 'https://games.mjyoke1111.biz.id/',
     'https://www.youtube.com/channel/UCAI_zEvJRJ4K48zl9YmZTUw', 'https://www.youtube.com/@dilmonmusic',
-    'https://github.com/mjyoke1111/ai-model-reviewer', 'https://github.com/mjyoke1111/jev-labs', 'https://github.com/mjyoke1111/ai-game-studios',
-    'https://x.com/MjYoke1111', 'https://github.com/mjyoke1111']) {
+    'https://x.com/MjYoke1111', 'https://github.com/mjyoke1111', 'https://github.com/mjyoke1111/portfolio']) {
     assert.ok(html.includes(`href="${site}"`), site);
   }
+});
+
+test('github links are the public profile and this page only', () => {
+  // The project repos are private, so a per-project source link would 404 for visitors.
+  const gh = [...html.matchAll(/href="(https:\/\/github\.com\/[^"]*)"/g)].map((m) => m[1]);
+  for (const h of gh) assert.ok(['https://github.com/mjyoke1111', 'https://github.com/mjyoke1111/portfolio'].includes(h), h);
+  assert.ok(!/Source on GitHub/.test(html), 'per-project source link');
+});
+
+test('robots.txt points at the sitemap, which lists the page', () => {
+  assert.match(readFileSync(join(dist, 'robots.txt'), 'utf8'), /^User-agent: \*\nAllow: \/\n[\s\S]*^Sitemap: https:\/\/www\.mjyoke1111\.biz\.id\/sitemap\.xml$/m);
+  assert.ok(readFileSync(join(dist, 'sitemap.xml'), 'utf8').includes('<loc>https://www.mjyoke1111.biz.id/</loc>'));
 });
 
 test('stats are prerendered from build data', () => {

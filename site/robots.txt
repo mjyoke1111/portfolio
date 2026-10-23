@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.mjyoke1111.biz.id/sitemap.xml

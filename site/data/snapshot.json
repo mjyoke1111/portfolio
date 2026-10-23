@@ -125,18 +125,7 @@
     "note": "Finished on its own after 17.2 min."
    }
   ],
-  "miss": {
-   "project": "mr",
-   "label": "Model Reviewer",
-   "title": "Threejs artwork style pass",
-   "sub": "Gemini 3.5 Flash · raw API",
-   "date": "2026-10-02",
-   "href": "https://mr.mjyoke1111.biz.id/r/threejs_artwork_style_pass__api-oneshot__gemini-3.5-flash__attempt1/",
-   "thumbSrc": "https://mr.mjyoke1111.biz.id/thumbs/threejs_artwork_style_pass__api-oneshot__gemini-3.5-flash__attempt1.webp",
-   "status": "error",
-   "note": "The page was produced but fails at runtime: page script never started (no animation frame requested within 120 s): http 404 https://cdnjs.cloudflare.com/ajax/libs/three.js/r160/three.module.js; Failed to load resource: the server responded with a status of 404 (); requestfailed: https://cdnjs.cloudflare.com/ajax/libs/three.js/r160/three.modul",
-   "statusLabel": "Error"
-  }
+  "miss": null
  },
  "games": {
   "stats": {
@@ -288,5 +277,5 @@
   }
  ],
  "videos": 210,
- "savedAt": "2026-10-23T16:23:58.678Z"
+ "savedAt": "2026-10-23T16:38:07.774Z"
 }

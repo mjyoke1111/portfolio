@@ -3,12 +3,9 @@ import { readFileSync } from 'node:fs';
 import { SITES } from '../scripts/fetch-data.mjs';
 
 export const SITE_URL = 'https://www.mjyoke1111.biz.id/';
-const SOURCE = {
-  mr: 'https://github.com/mjyoke1111/ai-model-reviewer',
-  jev: 'https://github.com/mjyoke1111/jev-labs',
-  games: 'https://github.com/mjyoke1111/ai-game-studios',
-};
 const SOCIAL = { x: 'https://x.com/MjYoke1111', github: 'https://github.com/mjyoke1111', coffee: 'https://buymeacoffee.com/mjyoke1111' };
+// The project repos are private; only this page's own source is public.
+const PAGE_SOURCE = 'https://github.com/mjyoke1111/portfolio';
 
 const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const n = (v) => new Intl.NumberFormat('en-US').format(v);
@@ -59,8 +56,8 @@ function negative({ href, img, loop, alt, top, bottom, w = 960, h = 600 }) {
 <span class="edge b"><span>${esc(bottom[0])}</span><span>${esc(bottom[1])}</span></span>
 </a>`;
 }
-function links(live, source, text) {
-  return `<p class="go"><a href="${esc(live)}">${esc(text || host(live))}${I.ext}</a>${source ? `<a class="quiet" href="${esc(source)}">Source on GitHub${I.ext}</a>` : ''}</p>`;
+function links(live, text) {
+  return `<p class="go"><a href="${esc(live)}">${esc(text || host(live))}${I.ext}</a></p>`;
 }
 function tags(list) { return `<ul class="tags">${list.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>`; }
 function trip(items, chHref, chName) {
@@ -188,7 +185,7 @@ ${LOOP}
 ${tags(['Benchmark', `${s.harnesses} harnesses`, `${n(s.prompts)} prompts`, 'failures kept'])}
 <p>The same prompt goes to many AI models and coding harnesses: Claude Code, Codex, OpenCode, Cline, Pi and more. <b>Every raw output is published side by side</b>, including the ones that crashed, stalled or drew nonsense.</p>
 ${hr.length ? `<table class="runs"><caption class="vh">Runs per harness</caption><thead><tr><th scope="col">Harness</th><th scope="col">Runs</th></tr></thead><tbody>${hr.slice(0, 6).map((h) => `<tr><td>${esc(h.name)}</td><td class="num">${n(h.runs)}</td></tr>`).join('')}${hr.length > 6 ? `<tr><td>${hr.length - 6} more harnesses</td><td class="num">${n(hr.slice(6).reduce((a, h) => a + h.runs, 0))}</td></tr>` : ''}</tbody></table>` : ''}
-${links(SITES.mr, SOURCE.mr)}
+${links(SITES.mr)}
 </div>
 </article>
 
@@ -199,7 +196,7 @@ ${LOOP}
 <h3><a href="${SITES.games}">AI Game Studio</a></h3>
 ${tags(['Games', `${n(g.stats.games)} playable`, 'model credited'])}
 <p>${n(g.stats.games)} browser games, each built by an AI model, with the model and harness named on every one.${newestGame ? ` Newest: <b>${esc(newestGame.title)}</b>, by ${esc(newestGame.sub.replace(' · ', ' in '))}.` : ''}</p>
-${links(SITES.games, SOURCE.games)}
+${links(SITES.games)}
 </div>
 </article>
 
@@ -210,7 +207,7 @@ ${LOOP}
 <h3><a href="${SITES.jev}">JevLab</a></h3>
 ${tags(['Experiments', `${data.jev.stats.jev} demos`, 'measured'])}
 <p>When does a typed model answer beat plain code? Measured experiments with the Jev decision model, each showing <b>the real choice, the probabilities and the confidence</b>.</p>
-${links(SITES.jev, SOURCE.jev)}
+${links(SITES.jev)}
 </div>
 </article>
 
@@ -232,7 +229,7 @@ ${LOOP}
 <h3><a href="${SITES.aica}">AI Coding Arena</a></h3>
 ${tags(['YouTube', 'explainers', 'timelapses', 'shows'])}
 <p>Plain-spoken AI explainers, coding timelapses and model showdowns: what coding agents actually ship, and where they fall over.</p>
-${links(SITES.aica, null, 'Watch on YouTube')}
+${links(SITES.aica, 'Watch on YouTube')}
 </div>
 </article>
 
@@ -243,7 +240,7 @@ ${LOOP}
 <h3><a href="${SITES.dil}">Dil Mon Music</a></h3>
 ${tags(['YouTube', 'original songs', 'instrumentals'])}
 <p>Original AI-assisted songs and instrumentals, from Bengali-language songs to drum and bass.</p>
-${links(SITES.dil, null, 'Listen on YouTube')}
+${links(SITES.dil, 'Listen on YouTube')}
 </div>
 </article>
 
@@ -252,7 +249,7 @@ ${links(SITES.dil, null, 'Listen on YouTube')}
 <p>New runs, games and videos go out as they finish.</p>
 <ul>
 <li><a href="${SOCIAL.x}">${I.x}X<span>@MjYoke1111</span></a></li>
-<li><a href="${SOCIAL.github}">${I.gh}GitHub<span>the source</span></a></li>
+<li><a href="${SOCIAL.github}">${I.gh}GitHub<span>@mjyoke1111</span></a></li>
 <li><a href="${SITES.aica}">${I.yt}YouTube<span>AI Coding Arena</span></a></li>
 </ul>
 </aside>
@@ -304,7 +301,7 @@ ${miss.note ? `<p class="note">${esc(miss.note.length > 190 ? miss.note.slice(0,
 <li><a href="${SITES.dil}">${I.yt}Dil Mon Music</a></li>
 <li><a href="${SOCIAL.coffee}">${I.cup}Buy me a coffee</a></li>
 </ul></nav>
-<p class="fine">Built <time datetime="${esc(built)}">${esc(long(built))}, ${esc(built.slice(11, 16))} UTC</time>. Numbers and the latest frames refresh every six hours.</p>
+<p class="fine">Built <time datetime="${esc(built)}">${esc(long(built))}, ${esc(built.slice(11, 16))} UTC</time>. Numbers and the latest frames refresh every six hours. <a href="${PAGE_SOURCE}">Source of this page</a>.</p>
 </div>
 </footer>
 <script>${js}</script>

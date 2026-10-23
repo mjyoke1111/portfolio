@@ -229,7 +229,6 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .cap p b { color: var(--ink); font-weight: 600; }
 .go { display: flex; flex-wrap: wrap; gap: 0 20px; margin-top: 2px; }
 .go a { overflow-wrap: anywhere; display: inline-flex; align-items: center; min-height: 44px; font-weight: 600; font-size: 15.5px; }
-.go a.quiet { font-weight: 500; color: var(--ink-2); }
 .runs { width: 100%; border-collapse: collapse; font-size: 14.5px; margin: 4px 0 2px; }
 .runs th { text-align: left; font-weight: 500; font-size: 13px; color: var(--ink-3); padding: 0 0 6px; border-bottom: 1px solid var(--ink); }
 .runs th:last-child, .runs td:last-child { text-align: right; }

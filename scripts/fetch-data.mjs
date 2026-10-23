@@ -40,6 +40,43 @@ async function firstOf(paths, as) {
 }
 const both = (key, path) => [SITES[key] + path, FALLBACK[key] + path];
 
+// Latest-strip links are checked before they reach the page: a run that is listed but not published
+// yet answers 404. HEAD first, GET when HEAD is not 200; when the custom domain gives no answer at all
+// (does not resolve, times out), the same path is tried on the fallback host. 0 means no answer anywhere.
+const CHECK_TIMEOUT = 8000;
+async function linkStatus(href) {
+  const k = Object.keys(FALLBACK).find((key) => href.startsWith(SITES[key]));
+  const urls = k ? [href, FALLBACK[k] + href.slice(SITES[k].length)] : [href];
+  for (const url of urls) {
+    try {
+      for (const method of ['HEAD', 'GET']) {
+        const res = await fetch(url, { method, signal: AbortSignal.timeout(CHECK_TIMEOUT), headers: { 'user-agent': 'mjyoke1111-portfolio-build' } });
+        await res.body?.cancel().catch(() => {});
+        if (res.status === 200 || method === 'GET') return res.status;
+      }
+    } catch { /* no answer from this host */ }
+  }
+  return 0;
+}
+// The first `quota` candidates whose link answers 200, in order. null when the first batch got no answer
+// at all (offline): verification is impossible and fetchData keeps the snapshot's items.
+async function pickLive(candidates, quota, hrefOf = (x) => x.href) {
+  const picked = [];
+  let answered = false;
+  for (let i = 0; picked.length < quota && i < candidates.length;) {
+    const batch = candidates.slice(i, i + quota - picked.length);
+    i += batch.length;
+    const codes = await Promise.all(batch.map((x) => linkStatus(hrefOf(x))));
+    batch.forEach((x, j) => {
+      if (codes[j]) answered = true;
+      if (codes[j] === 200) picked.push(x);
+      else console.log(`data: latest skips ${hrefOf(x)} (${codes[j] || 'no answer'})`);
+    });
+    if (!answered) return null;
+  }
+  return picked;
+}
+
 // "claude-opus-5-5 (effort max)" -> "Claude Opus 5.5"; labels that are already pretty pass through.
 export function prettyModel(s = '') {
   s = String(s).split(/ \(| \+ /)[0].trim();
@@ -74,9 +111,13 @@ async function modelReviewer() {
     note: x.status_note || '',
   });
   const sorted = r.results.filter((x) => x.artifacts && x.artifacts.thumb).sort((a, b) => String(when(b)).localeCompare(String(when(a))));
-  const latest = sorted.filter((x) => x.status === 'ok').slice(0, 4).map(item);
-  // The newest run that failed on the model's side (not stopped by us), shown on the page as a miss.
-  const missX = sorted.find((x) => ['dnf', 'error', 'stopped_by_our_timeout'].includes(x.status));
+  // The miss is the newest run that failed on the model's side (not stopped by us). Its link is checked
+  // like the strip's; `missed` is null when that check was impossible, and fetchData keeps the snapshot's.
+  const [latest, missed] = await Promise.all([
+    pickLive(sorted.filter((x) => x.status === 'ok').map(item), 4),
+    pickLive(sorted.filter((x) => ['dnf', 'error', 'stopped_by_our_timeout'].includes(x.status)), 1, (x) => SITES.mr + x.url),
+  ]);
+  const missX = missed && missed[0];
   const per = {};
   for (const x of r.results) {
     const h = x.harness_family === 'none (raw API)' ? 'Raw API, no harness' : String(x.harness_family || '').replace(/\s+\d[\d.]*.*$/, '').trim();
@@ -91,18 +132,20 @@ async function modelReviewer() {
     },
     statusLabels: (r.labels && r.labels.statuses) || {},
     latest,
-    miss: missX ? { ...item(missX), statusLabel: (r.labels?.statuses || {})[missX.status] || missX.status } : null,
+    miss: missX ? { ...item(missX), statusLabel: (r.labels?.statuses || {})[missX.status] || missX.status } : missed === null ? undefined : null,
   };
 }
 
 async function games() {
   const g = await firstOf(both('games', 'games.json'));
   const list = g.games || [];
-  const newest = list.slice(-4).reverse();
+  const pathOf = (x) => (x.path ? x.path.replace(/index\.html$/, '') : `games/${x.slug}/`);
+  const newest = await pickLive(list.slice().reverse(), 4, (x) => SITES.games + pathOf(x));
+  if (!newest) return { stats: { games: list.length, tiers: (g.tiers || []).length }, latest: null };
   const metas = await Promise.all(newest.map((x) => firstOf(both('games', `games/${x.slug}/META.json`)).catch(() => null)));
   const latest = newest.map((x, i) => {
     const m = metas[i] || {};
-    const path = x.path ? x.path.replace(/index\.html$/, '') : `games/${x.slug}/`;
+    const path = pathOf(x);
     return {
       project: 'games', label: 'AI Game Studio', title: x.title,
       sub: `${m.model_label || prettyModel(x.model)} · ${x.harness}`,
@@ -116,13 +159,12 @@ async function games() {
 async function jev() {
   const cat = await firstOf(both('jev', 'labs/catalogue.json'));
   // Same `added` date: later in the catalogue counts as newer.
-  const latest = cat.map((x, i) => ({ x, i }))
+  const latest = await pickLive(cat.map((x, i) => ({ x, i }))
     .sort((a, b) => String(b.x.added).localeCompare(String(a.x.added)) || b.i - a.i)
-    .slice(0, 4)
     .map(({ x }) => ({
       project: 'jev', label: 'JevLab', title: x.title, sub: x.summary, date: day(x.added),
       href: `${SITES.jev}labs/${x.slug}/`, thumbSrc: x.thumbnail ? `${SITES.jev}labs/${x.slug}/${x.thumbnail}` : '',
-    }));
+    })), 4);
   return { stats: { jev: cat.length }, latest };
 }
 
@@ -130,14 +172,14 @@ const unxml = (s) => s.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt
 async function feed(key) {
   const ch = CHANNELS[key];
   const xml = await get(`https://www.youtube.com/feeds/videos.xml?channel_id=${ch.id}`, 'text');
-  return [...xml.matchAll(/<entry>([\s\S]*?)<\/entry>/g)].slice(0, 3).map(([, e]) => {
+  return pickLive([...xml.matchAll(/<entry>([\s\S]*?)<\/entry>/g)].map(([, e]) => {
     const id = (e.match(/<yt:videoId>([^<]+)/) || [])[1];
     return {
       project: key, label: ch.label, title: unxml((e.match(/<title>([^<]*)/) || [])[1] || ''),
       sub: ch.label, date: day((e.match(/<published>([^<]+)/) || [])[1]),
       href: `https://www.youtube.com/watch?v=${id}`, thumbSrc: `https://i.ytimg.com/vi/${id}/mqdefault.jpg`,
     };
-  });
+  }), 3);
 }
 
 // Long-form + Shorts for both channels, via yt-dlp when it is installed. Optional, capped at ~45 s.
@@ -163,13 +205,25 @@ export async function fetchData() {
     videos: videoCount(),
   };
   const out = {}; const sources = {};
-  for (const [k, p] of Object.entries(jobs)) {
-    try { out[k] = await p; sources[k] = 'live'; } catch (e) {
+  // Settled together, so a job that fails early is never an unhandled rejection while a slow one runs.
+  const settled = await Promise.allSettled(Object.values(jobs));
+  for (const [i, k] of Object.keys(jobs).entries()) {
+    const { status, value, reason: e } = settled[i];
+    if (status === 'fulfilled') { out[k] = value; sources[k] = 'live'; } else {
       if (snap[k] === undefined) throw new Error(`${k}: fetch failed and no snapshot (${e.message})`);
       out[k] = snap[k]; sources[k] = 'snapshot';
       console.log(`data: ${k} from snapshot (${String(e.message).slice(0, 100)})`);
     }
   }
+  // Latest-strip lists whose links could not be checked at all keep the snapshot's items.
+  for (const k of ['mr', 'games', 'jev', 'aica', 'dil']) {
+    const list = k === 'aica' || k === 'dil';
+    if ((list ? out[k] : out[k].latest) !== null) continue;
+    const kept = (list ? snap[k] : snap[k] && snap[k].latest) || [];
+    if (list) out[k] = kept; else out[k].latest = kept;
+    console.log(`data: ${k} latest from snapshot (links could not be checked)`);
+  }
+  if (out.mr.miss === undefined) out.mr.miss = (snap.mr && snap.mr.miss) || null;
   if (Object.values(sources).includes('live')) {
     const { builtAt, sources: _s, ...prev } = snap;
     writeFileSync(SNAPSHOT, JSON.stringify({ ...prev, ...out, savedAt: new Date().toISOString() }, null, 1) + '\n');
