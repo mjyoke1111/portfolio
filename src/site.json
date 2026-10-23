@@ -1,7 +1,7 @@
 {
   "name": "mjyoke1111",
   "title": "mjyoke1111 — Portfolio",
-  "url": "https://mjyoke1111.pages.dev/",
+  "url": "https://www.mjyoke1111.biz.id/",
   "description": "AI benchmarks, browser games, experiments and shows, all built with AI models and live on the web.",
   "links": {
     "x": "https://x.com/MjYoke1111",
@@ -13,7 +13,7 @@
       "id": "mr",
       "title": "Model Reviewer",
       "kind": "Benchmark",
-      "url": "https://model-review-3yp.pages.dev/",
+      "url": "https://mr.mjyoke1111.biz.id/",
       "line": "I give the same prompt to different AI models and coding harnesses, then publish what each one actually built, side by side, so you can open the results and judge for yourself.",
       "tech": "Static site, GitHub Actions, Cloudflare Pages"
     },
@@ -21,7 +21,7 @@
       "id": "ags",
       "title": "AI Game Studio",
       "kind": "Games",
-      "url": "https://ai-game-studio-amz.pages.dev/",
+      "url": "https://games.mjyoke1111.biz.id/",
       "line": "A shelf of small browser games, each one made by an AI model from a single prompt. {games} of them so far, and you can play every one.",
       "tech": "HTML5 games, JavaScript, Cloudflare Pages"
     },
@@ -29,7 +29,7 @@
       "id": "jev",
       "title": "JevLab",
       "kind": "Experiments",
-      "url": "https://lab.jev-labs.pages.dev/",
+      "url": "https://jev.lab.mjyoke1111.biz.id/",
       "line": "Small, measured experiments around one question: when does a typed model answer actually beat plain code? Each comes with a playground and its results.",
       "tech": "Recorded model runs, browser playgrounds, Cloudflare Pages"
     }
@@ -61,6 +61,6 @@
       "line": "Shorts starring an AI character with strong opinions about smart fridges, captchas and robot vacuums."
     }
   ],
-  "games_json": "https://ai-game-studio-amz.pages.dev/games.json",
-  "games_base": "https://ai-game-studio-amz.pages.dev/"
+  "games_json": "https://games.mjyoke1111.biz.id/games.json",
+  "games_base": "https://games.mjyoke1111.biz.id/"
 }

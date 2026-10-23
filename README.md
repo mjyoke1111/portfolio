@@ -1,6 +1,6 @@
 # mjyoke1111 — Portfolio
 
-Source for [mjyoke1111.pages.dev](https://mjyoke1111.pages.dev): one page with the projects, games and videos.
+Source for [www.mjyoke1111.biz.id](https://www.mjyoke1111.biz.id): one page with the projects, games and videos.
 
 - `src/site.json` holds the copy and links.
 - `shoot.mjs` takes fresh desktop and mobile screenshots of each live site.
