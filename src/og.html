@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style>
+@font-face { font-family: "Archivo"; src: url(../site/fonts/archivo.woff2) format("woff2"); font-weight: 100 900; font-stretch: 62% 125%; }
+* { box-sizing: border-box; margin: 0; }
+html, body { width: 1200px; height: 630px; overflow: hidden; }
+body {
+  position: relative; background: #121211; color: #ecebe6; font-family: "Archivo", sans-serif;
+  display: grid; grid-template-columns: 1fr 360px; gap: 0;
+}
+.leak { position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(55% 75% at 64% -8%, rgba(231,140,50,.55), transparent 70%), radial-gradient(40% 55% at 78% 0%, rgba(214,70,40,.5), transparent 72%); }
+.l { position: relative; padding: 56px 0 52px 64px; display: flex; flex-direction: column; }
+.who { display: flex; align-items: center; gap: 12px; font-weight: 750; font-stretch: 78%; font-size: 30px; }
+.who i { width: 30px; height: 30px; background: #ecebe6; display: grid; place-items: center; }
+.who i b { width: 17px; height: 14px; background: #121211; display: block; }
+h1 { margin-top: 34px; font-weight: 760; font-stretch: 70%; font-size: 74px; line-height: .93; letter-spacing: -.025em; max-width: 14ch; }
+h1 em { font-style: normal; color: #ff5e48; }
+.n { margin-top: auto; display: flex; gap: 0; border-top: 2px solid #ecebe6; width: 700px; }
+.n div { flex: 1; padding: 14px 18px 0 0; }
+.n div + div { padding-left: 18px; border-left: 1px solid #3a3a37; }
+.n b { display: block; font-weight: 680; font-stretch: 64%; font-size: 52px; line-height: .95; letter-spacing: -.02em; }
+.n span { display: block; margin-top: 6px; font-size: 17px; color: #bdbbb4; }
+.strip { position: relative; background: #000; height: 630px; padding: 0 30px; display: flex; flex-direction: column; justify-content: center; gap: 18px; }
+.strip::before, .strip::after { content: ""; position: absolute; top: 0; bottom: 0; width: 14px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='26'%3E%3Crect x='2.5' y='8' width='9' height='10' rx='1.6' fill='%2336352f'/%3E%3C/svg%3E") repeat-y; }
+.strip::before { left: 6px; } .strip::after { right: 6px; }
+.f { position: relative; }
+.f img { display: block; width: 300px; height: 158px; object-fit: cover; }
+.e { display: flex; justify-content: space-between; font: 600 13px/1 "DejaVu Sans Mono", monospace; letter-spacing: .1em; color: #e7a43a; padding-bottom: 6px; text-transform: uppercase; }
+.loop { position: absolute; left: -8px; top: -12px; width: 120px; height: 40px; }
+.loop path { fill: none; stroke: #ff5e48; stroke-width: 3; stroke-linecap: round; }
+</style>
+</head>
+<body>
+<div class="leak"></div>
+<div class="l">
+  <div class="who"><i><b></b></i>mjyoke1111</div>
+  <h1>I test every new AI model in public, then build with the <em>survivors</em>.</h1>
+  <div class="n">
+    <div><b>{{models}}</b><span>models</span></div>
+    <div><b>{{runs}}</b><span>runs, failures kept</span></div>
+    <div><b>{{games}}</b><span>playable games</span></div>
+    <div><b>{{videos}}</b><span>videos</span></div>
+  </div>
+</div>
+<div class="strip">
+  <div class="f"><div class="e"><span>&#9656; 01</span><span>Model Reviewer</span></div><img src="../site/media/mr.webp" alt=""><svg class="loop" viewBox="0 0 138 44"><path d="M20 30C6 26 4 12 26 7c26-6 74-5 96 1 16 5 14 21-8 26-30 7-78 6-98-2-9-4-6-11 5-15"/></svg></div>
+  <div class="f"><div class="e"><span>&#9656; 02</span><span>Games</span></div><img src="../site/media/game1.webp" alt=""></div>
+  <div class="f"><div class="e"><span>&#9656; 03</span><span>JevLab</span></div><img src="../site/media/jev.webp" alt=""></div>
+</div>
+</body>
+</html>
